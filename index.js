@@ -98,13 +98,13 @@ window.addEventListener("keydown", (event) => {
       player.lastKey = "a";
       break;
     case "w":
-      player.velocity.y = -10;
+      player.velocity.y = -20;
       break;
   }
   //enemy keys
   switch (event.key) {
     case "ArrowUp":
-      enemy.velocity.y = -10;
+      enemy.velocity.y = -20;
       break;
     case "ArrowLeft":
       keys.ArrowLeft.pressed = true;
