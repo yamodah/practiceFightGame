@@ -9,16 +9,31 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 0.7;
 
 class Sprite {
-  constructor({ position, velocity }) {
+  constructor({ position, velocity, color = "red" }) {
     this.position = position;
     this.velocity = velocity;
     this.height = 150;
     this.width = 50;
     this.lastKey;
+    this.attackBox = {
+      position: this.position,
+      height: 50,
+      width: 100,
+    };
+    this.color = color;
   }
   draw() {
-    ctx.fillStyle = "red";
+    ctx.fillStyle = this.color;
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+    //attackBox
+    ctx.fillStyle = "green";
+    ctx.fillRect(
+      this.attackBox.position.x,
+      this.attackBox.position.y,
+      this.attackBox.width,
+      this.attackBox.height
+    );
   }
   update() {
     this.draw();
@@ -39,6 +54,7 @@ const player = new Sprite({
 const enemy = new Sprite({
   position: { x: canvas.width - 50, y: 0 },
   velocity: { x: 0, y: 0 },
+  color: "blue",
 });
 
 const keys = {
