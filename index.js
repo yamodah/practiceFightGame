@@ -35,16 +35,24 @@ const player = new Fighter({
     x: 215,
     y: 157,
   },
-  sprites:{
-    idle:{
-      imgSrc:"./img/samuraiMack/idle.png",
-      framesMax:8
+  sprites: {
+    idle: {
+      imgSrc: "./img/samuraiMack/Idle.png",
+      framesMax: 8,
     },
-    run:{
-      imgSrc:"./img/samuraiMack/run.png",
-      framesMax:8
-    }
-  }
+    run: {
+      imgSrc: "./img/samuraiMack/Run.png",
+      framesMax: 8,
+    },
+    jump: {
+      imgSrc: "./img/samuraiMack/Jump.png",
+      framesMax: 2,
+    },
+    fall: {
+      imgSrc: "./img/samuraiMack/Fall.png",
+      framesMax: 2,
+    },
+  },
 });
 const enemy = new Fighter({
   position: { x: canvas.width - 50, y: 0 },
@@ -88,8 +96,15 @@ function animate() {
   //player movement
   if (keys.a.pressed && player.lastKey === "a") {
     player.velocity.x = -5;
+    player.switchSprite("run");
   } else if (keys.d.pressed && player.lastKey === "d") {
     player.velocity.x = 5;
+    player.switchSprite("run");
+  } else {
+    player.switchSprite("idle");
+  }
+  if (player.velocity.y < 0) {
+    player.switchSprite("jump");
   }
 
   //enemy movement
