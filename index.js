@@ -110,7 +110,7 @@ function decreaseTimer() {
   setTimeout(decreaseTimer, 1000);
   if (timer > 0) {
     timer -= 1;
-    document.querySelector("#timer").innerHTML = `${timer} sec`;
+    document.querySelector("#timer").innerHTML = timer;
   }
 }
 decreaseTimer();
