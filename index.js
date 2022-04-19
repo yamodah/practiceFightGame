@@ -61,6 +61,14 @@ const player = new Fighter({
       framesMax: 6,
     },
   },
+  attackBox:{
+    offset:{
+      x:100, 
+      y:50
+    }, 
+    width:160,
+    height:50
+  }
 });
 const enemy = new Fighter({
   position: { x: canvas.width - 50, y: 0 },
@@ -100,6 +108,14 @@ const enemy = new Fighter({
       framesMax: 4,
     },
   },
+  attackBox:{
+    offset:{
+      x:-175, 
+      y:50
+    }, 
+    width:175,
+    height:50
+  }
 });
 
 const keys = {

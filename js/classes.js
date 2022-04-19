@@ -57,6 +57,7 @@ class Fighter extends Sprite {
     framesMax = 1,
     offset = { x: 0, y: 0 },
     sprites,
+    attackBox = { offset: {}, width: undefined, height: undefined },
   }) {
     super({
       position,
@@ -74,9 +75,9 @@ class Fighter extends Sprite {
         x: this.position.x,
         y: this.position.y,
       },
-      height: 50,
-      width: 100,
-      offset,
+      height: attackBox.height,
+      width: attackBox.width,
+      offset: attackBox.offset,
     };
     this.color = color;
     this.isAttacking;
@@ -97,10 +98,18 @@ class Fighter extends Sprite {
   update() {
     this.draw();
     this.animateFrames();
-    this.attackBox.position.x = this.position.x - this.attackBox.offset.x;
-    this.attackBox.position.y = this.position.y;
+
+    this.attackBox.position.x = this.position.x + this.attackBox.offset.x;
+    this.attackBox.position.y = this.position.y + this.attackBox.offset.y;
+    ctx.fillRect(
+      this.attackBox.position.x,
+      this.attackBox.position.y,
+      this.attackBox.width,
+      this.attackBox.height
+    );
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
+
     if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
       this.velocity.y = 0;
       this.position.y = 330;
@@ -159,13 +168,13 @@ class Fighter extends Sprite {
           this.framesCurrent = 0;
         }
         break;
-        case "attack2":
-          if (this.image !== this.sprites.attack2.image) {
-            this.image = this.sprites.attack2.image;
-            this.framesMax = this.sprites.attack2.framesMax;
-            this.framesCurrent = 0;
-          }
-          break;
+      case "attack2":
+        if (this.image !== this.sprites.attack2.image) {
+          this.image = this.sprites.attack2.image;
+          this.framesMax = this.sprites.attack2.framesMax;
+          this.framesCurrent = 0;
+        }
+        break;
     }
   }
 }
