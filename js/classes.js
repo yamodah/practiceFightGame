@@ -54,7 +54,7 @@ class Fighter {
     this.attackBox.position.y = this.position.y;
     this.position.y += this.velocity.y;
     this.position.x += this.velocity.x;
-    if (this.position.y + this.height + this.velocity.y >= canvas.height) {
+    if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
       this.velocity.y = 0;
     } else {
       this.velocity.y += gravity;

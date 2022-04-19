@@ -8,12 +8,20 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.7;
 
+
 const background = new Sprite({
   position: {
     x: 0,
     y: 0,
   },
   imgSrc: "./img/background.png",
+});
+const shop = new Sprite({
+  position: {
+    x: 0,
+    y: 0,
+  },
+  imgSrc: "./img/shop.png",
 });
 const player = new Fighter({
   position: { x: 0, y: 0 },
