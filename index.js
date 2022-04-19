@@ -8,7 +8,6 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.7;
 
-
 const background = new Sprite({
   position: {
     x: 0,
@@ -18,10 +17,11 @@ const background = new Sprite({
 });
 const shop = new Sprite({
   position: {
-    x: 0,
-    y: 0,
+    x: 600,
+    y: 128,
   },
   imgSrc: "./img/shop.png",
+  scale: 2.75,
 });
 const player = new Fighter({
   position: { x: 0, y: 0 },
@@ -62,6 +62,7 @@ function animate() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.width);
   background.update();
+  shop.update();
   player.update();
   enemy.update();
   player.velocity.x = 0;
