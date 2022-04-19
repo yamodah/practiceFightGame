@@ -105,7 +105,15 @@ const keys = {
     pressed: false,
   },
 };
-
+let timer = 10;
+function decreaseTimer() {
+  setTimeout(decreaseTimer, 1000);
+  if (timer > 0) {
+    timer -= 1;
+    document.querySelector("#timer").innerHTML = `${timer} sec`;
+  }
+}
+decreaseTimer();
 function animate() {
   window.requestAnimationFrame(animate);
   ctx.fillStyle = "black";
