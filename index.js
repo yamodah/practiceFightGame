@@ -28,9 +28,13 @@ const player = new Fighter({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
-  imgSrc:"./img/samuraiMack/idle.png",
-  framesMax:8,
-  scale:2
+  imgSrc: "./img/samuraiMack/idle.png",
+  framesMax: 8,
+  scale: 2.5,
+  offset: {
+    x: 215,
+    y: 157,
+  },
 });
 const enemy = new Fighter({
   position: { x: canvas.width - 50, y: 0 },
