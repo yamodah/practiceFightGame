@@ -15,16 +15,22 @@
     <div style="position: relative; display: inline-block;">
         <div style="position: absolute; display: flex; width: 100%; align-items: center; padding: 20px;">
             <!-- player health -->
-            <div id="playerHealth" style="background-color: yellow; height: 30px; width: 100%;"></div>
+            <div style="position: relative; width: 100%; height: 30px;">
+                <div style="background-color: yellow; height: 30px; width: 100%;"></div>
+                <div id="playerHealth" style="background-color: red; position: absolute; top: 0;right: 0;left: 0; bottom: 0;"></div>
+            </div>
             <!-- mini container -->
-            <div style="background-color: red; width: 100px; height: 100px; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0;">
+            <div style="background-color: yellow; width: 100px; height: 100px; display: flex; flex-direction: column; justify-content: center; flex-shrink: 0;">
                 <!-- timer -->
                 <div id="timer" style="background-color: green; width: 100px; height: 35px;"></div>
                 <!-- score -->
                 <div id="score" style="background-color: purple; width: 100px; height: 35px;"></div>
             </div>
             <!-- enemy health -->
-            <div id="enemyHealth" style="background-color: yellow; width: 100%; height: 30px;"></div>
+            <div style="position: relative; width: 100%; height: 30px;">
+                <div style="background-color: yellow; height:30px"></div>
+                <div id="enemyHealth" style="background-color: blue; position: absolute; top: 0;right: 0;left: 0; bottom: 0;"></div>
+            </div>
         </div>
     <canvas></canvas>
     </div>
