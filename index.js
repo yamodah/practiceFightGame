@@ -105,12 +105,28 @@ const keys = {
     pressed: false,
   },
 };
-let timer = 10;
+function determineWinner({ player, enemy, timerId }) {
+  clearTimeout(timerId);
+  document.querySelector("#result").style.display = "flex";
+  if (player.health === enemy.health) {
+    document.querySelector("#result").innerHTML = "TIE";
+  } else if (player.health > enemy.health) {
+    document.querySelector("#result").innerHTML = "PLAYER 1 WINS";
+  } else if (player.health < enemy.health) {
+    document.querySelector("#result").innerHTML = "PLAYER 2 WINS";
+  }
+}
+
+let timer = 60;
+let timerId;
 function decreaseTimer() {
-  setTimeout(decreaseTimer, 1000);
+  timerId = setTimeout(decreaseTimer, 1000);
   if (timer > 0) {
-    timer -= 1;
+    timer--;
     document.querySelector("#timer").innerHTML = timer;
+  }
+  if (timer === 0) {
+    determineWinner({ player, enemy, timerId });
   }
 }
 decreaseTimer();
@@ -128,16 +144,19 @@ function animate() {
   } else if (keys.d.pressed && player.lastKey === "d") {
     player.velocity.x = 5;
   }
+
   //enemy movement
   if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
     enemy.velocity.x = -5;
   } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
     enemy.velocity.x = 5;
   }
+
   //detect collision
   if (
     rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
-    player.isAttacking
+    player.isAttacking &&
+    player.health > 0
   ) {
     player.isAttacking = false;
     enemy.health -= 20;
@@ -145,11 +164,17 @@ function animate() {
   }
   if (
     rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-    enemy.isAttacking
+    enemy.isAttacking &&
+    enemy.health > 0
   ) {
     enemy.isAttacking = false;
     player.health -= 20;
     document.querySelector("#playerHealth").style.width = `${player.health}%`;
+  }
+
+  //end game based on health
+  if (enemy.health <= 0 || player.health <= 0) {
+    determineWinner({ player, enemy, timerId });
   }
 }
 
