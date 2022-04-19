@@ -8,7 +8,6 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 const gravity = 0.7;
 
-
 function rectangularCollision({ rectangle1, rectangle2 }) {
   return (
     rectangle1.attackBox.position.x + rectangle1.attackBox.width >=
@@ -20,6 +19,13 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
   );
 }
+const background = new Sprite({
+  position: {
+    x: 0,
+    y: 0,
+  },
+  imgSrc: "./img/background.png",
+});
 const player = new Fighter({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
@@ -81,6 +87,7 @@ function animate() {
   window.requestAnimationFrame(animate);
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.width);
+  background.update();
   player.update();
   enemy.update();
   player.velocity.x = 0;

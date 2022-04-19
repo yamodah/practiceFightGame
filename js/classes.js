@@ -4,7 +4,7 @@ class Sprite {
     this.height = 150;
     this.width = 50;
     this.image = new Image();
-    this.image.src = imgSrc;
+    this.image.src = `${imgSrc}`;
   }
   draw() {
     ctx.drawImage(this.image, this.position.x, this.position.y);
