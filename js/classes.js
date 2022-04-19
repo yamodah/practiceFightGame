@@ -1,18 +1,26 @@
 class Sprite {
-  constructor({ position, imgSrc }) {
+  constructor({ position, imgSrc, scale = 1 }) {
     this.position = position;
     this.height = 150;
     this.width = 50;
     this.image = new Image();
     this.image.src = `${imgSrc}`;
+    this.scale = scale;
   }
   draw() {
-    ctx.drawImage(this.image, this.position.x, this.position.y);
+    ctx.drawImage(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.image.width * this.scale,
+      this.height * this.scale
+    );
   }
   update() {
     this.draw();
   }
 }
+
 class Fighter {
   constructor({ position, velocity, color = "red", offset }) {
     this.position = position;
