@@ -162,6 +162,8 @@ function animate() {
   ctx.fillRect(0, 0, canvas.width, canvas.width);
   background.update();
   shop.update();
+  ctx.fillStyle = "rgba(255,255,255,0.15)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   enemy.update();
   player.velocity.x = 0;
