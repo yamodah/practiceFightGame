@@ -1,18 +1,23 @@
 class Sprite {
-  constructor({ position, imgSrc, scale = 1 }) {
+  constructor({ position, imgSrc, scale = 1, framesMax =1 }) {
     this.position = position;
     this.height = 150;
     this.width = 50;
     this.image = new Image();
     this.image.src = `${imgSrc}`;
     this.scale = scale;
+    this.framesMax = framesMax
   }
   draw() {
     ctx.drawImage(
       this.image,
+      0,
+      0,
+      this.image.width / this.framesMax,
+      this.image.height,
       this.position.x,
       this.position.y,
-      this.image.width * this.scale,
+      (this.image.width / this.framesMax) * this.scale,
       this.image.height * this.scale
     );
   }
