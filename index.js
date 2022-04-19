@@ -60,15 +60,19 @@ const player = new Fighter({
       imgSrc: "./img/samuraiMack/Attack2.png",
       framesMax: 6,
     },
+    takeHit: {
+      imgSrc: "./img/samuraiMack/Take Hit - white silhouette.png",
+      framesMax: 4,
+    },
   },
-  attackBox:{
-    offset:{
-      x:70, 
-      y:50
-    }, 
-    width:190,
-    height:50
-  }
+  attackBox: {
+    offset: {
+      x: 70,
+      y: 50,
+    },
+    width: 190,
+    height: 50,
+  },
 });
 const enemy = new Fighter({
   position: { x: canvas.width - 50, y: 0 },
@@ -107,15 +111,19 @@ const enemy = new Fighter({
       imgSrc: "./img/kenji/Attack2.png",
       framesMax: 4,
     },
+    takeHit: {
+      imgSrc: "./img/kenji/Take Hit.png",
+      framesMax: 3,
+    },
   },
-  attackBox:{
-    offset:{
-      x:-175, 
-      y:50
-    }, 
-    width:175,
-    height:50
-  }
+  attackBox: {
+    offset: {
+      x: -175,
+      y: 50,
+    },
+    width: 175,
+    height: 50,
+  },
 });
 
 const keys = {
@@ -169,11 +177,11 @@ function animate() {
   //enemy movement
   if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
     enemy.velocity.x = -5;
-    enemy.switchSprite("run")
+    enemy.switchSprite("run");
   } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
     enemy.velocity.x = 5;
-    enemy.switchSprite("run")
-  }else {
+    enemy.switchSprite("run");
+  } else {
     enemy.switchSprite("idle");
   }
   if (enemy.velocity.y < 0) {
@@ -186,26 +194,27 @@ function animate() {
   if (
     rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
     player.isAttacking &&
-    player.health > 0 && player.framesCurrent === 4
+    player.health > 0 &&
+    player.framesCurrent === 4
   ) {
+    enemy.takeHit();
     player.isAttacking = false;
-    enemy.health -= 20;
     document.querySelector("#enemyHealth").style.width = `${enemy.health}%`;
   }
-  if(player.isAttacking && player.framesCurrent ===4){
-    player.isAttacking =  false
+  if (player.isAttacking && player.framesCurrent === 4) {
+    player.isAttacking = false;
   }
   if (
     rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
     enemy.isAttacking &&
     enemy.health > 0
   ) {
+    player.takeHit();
     enemy.isAttacking = false;
-    player.health -= 20;
     document.querySelector("#playerHealth").style.width = `${player.health}%`;
   }
-  if(enemy.isAttacking && enemy.framesCurrent ===2){
-    enemy.isAttacking =  false
+  if (enemy.isAttacking && enemy.framesCurrent === 2) {
+    enemy.isAttacking = false;
   }
 
   //end game based on health
