@@ -64,6 +64,10 @@ const player = new Fighter({
       imgSrc: "./img/samuraiMack/Take Hit - white silhouette.png",
       framesMax: 4,
     },
+    death: {
+      imgSrc: "./img/samuraiMack/Death.png",
+      framesMax: 6,
+    },
   },
   attackBox: {
     offset: {
@@ -114,6 +118,10 @@ const enemy = new Fighter({
     takeHit: {
       imgSrc: "./img/kenji/Take Hit.png",
       framesMax: 3,
+    },
+    death: {
+      imgSrc: "./img/kenji/Death.png",
+      framesMax: 7,
     },
   },
   attackBox: {
@@ -227,38 +235,42 @@ animate();
 
 window.addEventListener("keydown", (event) => {
   //player keys
-  switch (event.key) {
-    case "d":
-      keys.d.pressed = true;
-      player.lastKey = "d";
-      break;
-    case "a":
-      keys.a.pressed = true;
-      player.lastKey = "a";
-      break;
-    case "w":
-      player.velocity.y = -20;
-      break;
-    case " ":
-      player.attack();
-      break;
+  if (!player.dead) {
+    switch (event.key) {
+      case "d":
+        keys.d.pressed = true;
+        player.lastKey = "d";
+        break;
+      case "a":
+        keys.a.pressed = true;
+        player.lastKey = "a";
+        break;
+      case "w":
+        player.velocity.y = -20;
+        break;
+      case " ":
+        player.attack();
+        break;
+    }
   }
   //enemy keys
-  switch (event.key) {
-    case "ArrowUp":
-      enemy.velocity.y = -20;
-      break;
-    case "ArrowLeft":
-      keys.ArrowLeft.pressed = true;
-      enemy.lastKey = "ArrowLeft";
-      break;
-    case "ArrowRight":
-      keys.ArrowRight.pressed = true;
-      enemy.lastKey = "ArrowRight";
-      break;
-    case "ArrowDown":
-      enemy.attack();
-      break;
+  if (!enemy.dead) {
+    switch (event.key) {
+      case "ArrowUp":
+        enemy.velocity.y = -20;
+        break;
+      case "ArrowLeft":
+        keys.ArrowLeft.pressed = true;
+        enemy.lastKey = "ArrowLeft";
+        break;
+      case "ArrowRight":
+        keys.ArrowRight.pressed = true;
+        enemy.lastKey = "ArrowRight";
+        break;
+      case "ArrowDown":
+        enemy.attack();
+        break;
+    }
   }
   // console.log(event.key);
 });
