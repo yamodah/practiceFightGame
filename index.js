@@ -9,6 +9,17 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 const gravity = 0.7;
 
 class Sprite {
+  constructor({ position }) {
+    this.position = position;
+    this.height = 150;
+    this.width = 50;
+  }
+  draw() {}
+  update() {
+    this.draw();
+  }
+}
+class Fighter {
   constructor({ position, velocity, color = "red", offset }) {
     this.position = position;
     this.velocity = velocity;
@@ -73,12 +84,12 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     rectangle1.attackBox.position.y <= rectangle2.position.y + rectangle2.height
   );
 }
-const player = new Sprite({
+const player = new Fighter({
   position: { x: 0, y: 0 },
   velocity: { x: 0, y: 0 },
   offset: { x: 0, y: 0 },
 });
-const enemy = new Sprite({
+const enemy = new Fighter({
   position: { x: canvas.width - 50, y: 0 },
   velocity: { x: 0, y: 0 },
   color: "blue",
