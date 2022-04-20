@@ -1,6 +1,7 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
+const startButton = document.querySelector("#startGame")
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -155,7 +156,10 @@ const keys = {
   },
 };
 
-decreaseTimer();
+// decreaseTimer();
+// function init (){
+
+// }
 function animate() {
   window.requestAnimationFrame(animate);
   ctx.fillStyle = "black";
@@ -236,9 +240,13 @@ function animate() {
     determineWinner({ player, enemy, timerId });
   }
 }
+animate()
 
-animate();
-
+startButton.addEventListener("click",()=>{
+  // animate()
+  decreaseTimer()
+  startButton.style.display = "none"
+})
 window.addEventListener("keydown", (event) => {
   //player keys
   if (!player.dead) {
