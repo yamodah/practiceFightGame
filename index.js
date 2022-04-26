@@ -219,6 +219,12 @@ function animate() {
     ) {
       enemy.velocity.x = 5;
       enemy.switchSprite("run");
+    } else if (
+      rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
+      enemy.image !== enemy.sprites.attack1.image &&
+      enemy.framesElapsed % enemy.framesCurrent == 1
+    ) {
+      enemy.attack();
     } else {
       enemy.switchSprite("idle");
       // enemy.attack()
@@ -252,8 +258,7 @@ function animate() {
   if (
     rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
     enemy.health > 0 &&
-    enemy.image !== enemy.sprites.attack1.image &&
-    enemy.framesElapsed % enemy.framesCurrent == 0
+    enemy.isAttacking
   ) {
     enemy.attack();
     console.log("hit");
@@ -295,7 +300,7 @@ window.addEventListener("keydown", (event) => {
         player.lastKey = "a";
         break;
       case "w":
-        if (player.position.y > canvas.height/2) {
+        if (player.position.y > canvas.height / 2) {
           player.velocity.y = -20;
           enemy.velocity.y = -20;
         }
