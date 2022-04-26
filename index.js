@@ -174,7 +174,7 @@ function animate() {
   player.velocity.x = 0;
   enemy.velocity.x = 0;
   //player movement
-  if (keys.a.pressed && player.lastKey === "a") {
+  if (keys.a.pressed && player.lastKey === "a" && player.position.x >= 0) {
     player.velocity.x = -5;
     player.switchSprite("run");
   } else if (keys.d.pressed && player.lastKey === "d") {
@@ -200,8 +200,13 @@ function animate() {
   //   enemy.switchSprite("idle");
   // }
   if (gameState === "fight") {
-    if (player.isAttacking) {
+    if (
+      player.isAttacking &&
+      enemy.position.y > canvas.height / 2 &&
+      enemy.position.x > 0
+    ) {
       enemy.velocity.x = -5;
+      enemy.velocity.y = -10;
       enemy.switchSprite("run");
     } else if (
       enemy.position.x + enemy.width / 2 >
@@ -225,6 +230,11 @@ function animate() {
       enemy.framesElapsed % enemy.framesCurrent == 1
     ) {
       enemy.attack();
+    } else if (
+      player.image == player.sprites.jump.image &&
+      enemy.position.y > canvas.height / 2
+    ) {
+      enemy.velocity.y = -20;
     } else {
       enemy.switchSprite("idle");
       // enemy.attack()
@@ -260,13 +270,13 @@ function animate() {
     enemy.health > 0 &&
     enemy.isAttacking
   ) {
+    // console.log("hit");
     enemy.attack();
-    console.log("hit");
     player.takeHit();
+    enemy.isAttacking = false;
     gsap.to("#playerHealth", {
       width: `${player.health}%`,
     });
-    enemy.isAttacking = false;
   }
 
   if (enemy.isAttacking && enemy.framesCurrent === 2) {
@@ -302,7 +312,6 @@ window.addEventListener("keydown", (event) => {
       case "w":
         if (player.position.y > canvas.height / 2) {
           player.velocity.y = -20;
-          enemy.velocity.y = -20;
         }
         break;
       case " ":
