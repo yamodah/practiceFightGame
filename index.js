@@ -199,7 +199,11 @@ function animate() {
   // } else {
   //   enemy.switchSprite("idle");
   // }
+
+  //ENEMY AI MOVEMENT
+  //keeps CPU idle until gameState changes to "fight"
   if (gameState === "fight") {
+    //mini jump dodge
     if (
       player.isAttacking &&
       enemy.position.y > canvas.height / 2 &&
@@ -208,13 +212,17 @@ function animate() {
       enemy.velocity.x = -5;
       enemy.velocity.y = -10;
       enemy.switchSprite("run");
-    } else if (
+    }
+    //maintain pressure on player 1
+    else if (
       enemy.position.x + enemy.width / 2 >
       player.position.x + enemy.attackBox.width
     ) {
       enemy.velocity.x = -5;
       enemy.switchSprite("run");
-    } else if (
+    }
+    //keep player 1 in front of you
+    else if (
       enemy.position.x + enemy.width / 2 <
       player.position.x +
         enemy.width +
@@ -224,25 +232,31 @@ function animate() {
     ) {
       enemy.velocity.x = 5;
       enemy.switchSprite("run");
-    } else if (
+    }
+    //attack but have mercy  -- no 60+ hits a second you naughty CPU
+    else if (
       rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
       enemy.image !== enemy.sprites.attack1.image &&
       enemy.framesElapsed % enemy.framesCurrent == 1
     ) {
       enemy.attack();
-    } else if (
+    }
+    //mirror the jumps of player 1 -- we cannot allow for complete highground domination
+    else if (
       player.image == player.sprites.jump.image &&
       enemy.position.y > canvas.height / 2
     ) {
       enemy.velocity.y = -20;
-    } else {
+    }
+    // prevents CPU from getting stuck in a run or attack loop
+    else {
       enemy.switchSprite("idle");
-      // enemy.attack()
     }
   } else {
     enemy.switchSprite("idle");
   }
 
+  //animation swticher
   if (enemy.velocity.y < 0) {
     enemy.switchSprite("jump");
   } else if (enemy.velocity.y > 0) {
@@ -270,7 +284,6 @@ function animate() {
     enemy.health > 0 &&
     enemy.isAttacking
   ) {
-    // console.log("hit");
     enemy.attack();
     player.takeHit();
     enemy.isAttacking = false;
