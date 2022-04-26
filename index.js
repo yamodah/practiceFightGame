@@ -1,7 +1,7 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-const startButton = document.querySelector("#startGame")
+const startButton = document.querySelector("#startGame");
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -160,6 +160,7 @@ const keys = {
 // function init (){
 
 // }
+let gameState = "start";
 function animate() {
   window.requestAnimationFrame(animate);
   ctx.fillStyle = "black";
@@ -189,15 +190,43 @@ function animate() {
   }
 
   //enemy movement
-  if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
-    enemy.velocity.x = -5;
-    enemy.switchSprite("run");
-  } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
-    enemy.velocity.x = 5;
-    enemy.switchSprite("run");
+  // if (keys.ArrowLeft.pressed && enemy.lastKey === "ArrowLeft") {
+  //   enemy.velocity.x = -5;
+  //   enemy.switchSprite("run");
+  // } else if (keys.ArrowRight.pressed && enemy.lastKey === "ArrowRight") {
+  //   enemy.velocity.x = 5;
+  //   enemy.switchSprite("run");
+  // } else {
+  //   enemy.switchSprite("idle");
+  // }
+  if (gameState === "fight") {
+    if (player.isAttacking) {
+      enemy.velocity.x = -5;
+      enemy.switchSprite("run");
+    } else if (
+      enemy.position.x + enemy.width / 2 >
+      player.position.x + enemy.attackBox.width
+    ) {
+      enemy.velocity.x = -5;
+      enemy.switchSprite("run");
+    } else if (
+      enemy.position.x + enemy.width / 2 <
+      player.position.x +
+        enemy.width +
+        enemy.attackBox.width +
+        enemy.attackBox.offset.x +
+        30
+    ) {
+      enemy.velocity.x = 5;
+      enemy.switchSprite("run");
+    } else {
+      enemy.switchSprite("idle");
+      // enemy.attack()
+    }
   } else {
     enemy.switchSprite("idle");
   }
+
   if (enemy.velocity.y < 0) {
     enemy.switchSprite("jump");
   } else if (enemy.velocity.y > 0) {
@@ -222,15 +251,21 @@ function animate() {
   }
   if (
     rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-    enemy.isAttacking &&
-    enemy.health > 0
+    enemy.health > 0 &&
+    enemy.image !== enemy.sprites.attack1.image &&
+    enemy.framesElapsed % enemy.framesCurrent == 0 
   ) {
-    player.takeHit();
-    enemy.isAttacking = false;
-    gsap.to("#playerHealth", {
-      width: `${player.health}%`,
-    });
+
+      enemy.attack();
+      console.log("hit");
+      player.takeHit();
+      gsap.to("#playerHealth", {
+        width: `${player.health}%`,
+      });
+      enemy.isAttacking = false;
+
   }
+
   if (enemy.isAttacking && enemy.framesCurrent === 2) {
     enemy.isAttacking = false;
   }
@@ -238,15 +273,17 @@ function animate() {
   //end game based on health
   if (enemy.health <= 0 || player.health <= 0) {
     determineWinner({ player, enemy, timerId });
+    gameState = "done";
   }
 }
-animate()
+animate();
 
-startButton.addEventListener("click",()=>{
+startButton.addEventListener("click", () => {
   // animate()
-  decreaseTimer()
-  startButton.style.display = "none"
-})
+  decreaseTimer();
+  startButton.style.display = "none";
+  gameState = "fight";
+});
 window.addEventListener("keydown", (event) => {
   //player keys
   if (!player.dead) {
@@ -261,6 +298,7 @@ window.addEventListener("keydown", (event) => {
         break;
       case "w":
         player.velocity.y = -20;
+        enemy.velocity.y = -20;
         break;
       case " ":
         player.attack();
