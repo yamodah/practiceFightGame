@@ -2,6 +2,8 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
 const startButton = document.querySelector("#startGame");
+const restartButton = document.querySelector("#restartGame");
+
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -300,6 +302,9 @@ function animate() {
   if (enemy.health <= 0 || player.health <= 0) {
     determineWinner({ player, enemy, timerId });
     gameState = "done";
+    setTimeout(() => {
+      restartButton.style.display = "flex";
+    }, 2000);
   }
 }
 animate();
@@ -309,6 +314,9 @@ startButton.addEventListener("click", () => {
   decreaseTimer();
   startButton.style.display = "none";
   gameState = "fight";
+});
+restartButton.addEventListener("click", () => {
+ location.reload()
 });
 window.addEventListener("keydown", (event) => {
   //player keys
