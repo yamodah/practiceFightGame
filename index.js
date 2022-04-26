@@ -2,6 +2,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
 const startButton = document.querySelector("#startGame");
+const startModal = document.querySelector("#startModal");
 const restartButton = document.querySelector("#restartGame");
 
 canvas.width = 1024;
@@ -312,7 +313,7 @@ animate();
 startButton.addEventListener("click", () => {
   // animate()
   decreaseTimer();
-  startButton.style.display = "none";
+  startModal.style.display = "none";
   gameState = "fight";
 });
 restartButton.addEventListener("click", () => {

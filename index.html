@@ -32,10 +32,21 @@
                 <div id="enemyHealth" style="background-color: #818CF8; position: absolute; top: 0;right: 0;left: 0; bottom: 0;"></div>
             </div>
         </div>
-    <div  id="result"style="position: absolute; color: white; display: none; align-items: center; justify-content: center; top: 0; right:0; left: 0; bottom: 0;">TIE</div>    
-    <div  style="position: absolute; background-color:none; display: flex; align-items: center; justify-content: center; top: 0px; right:0; left: 0; bottom: 0;">
-        <button id="startGame" style="padding:10px; color: black;">START GAME</button>
+    <div  id="result" style="position: absolute; color: white; display: none; align-items: center; justify-content: center; top: 0; right:0; left: 0; bottom: 0; text-shadow: 2px 2px black;"><h2>TIE</h2></div>    
+    <div   style="position: absolute; background-color:none; display: flex; align-items: center; justify-content: center; top: 0px; right:0; left: 0; bottom: 0; ">
         <button id="restartGame" style="padding:10px; color: black; display: none; margin-top: 75px;">RESTART GAME</button>
+        <div id="startModal" style="display:flex; flex-direction: column; color: white; text-shadow: 2px 2px black; align-items: center;  border: 2px solid white; padding: 10px;">
+        <h3>CONTROLS</h3>
+        <div style="display: flex; flex-direction: row; align-items: center;">
+        <p style="text-align: left; padding: 10px; margin-right: 10px;">
+            JUMP: W<br>
+            LEFT: A<br>
+            RIGHT: D<br>
+            ATTACK: SPACE
+        </p>
+        </div>
+    <button id="startGame" style="padding:10px; color: black; height: 40%; margin-bottom: 10px;">START GAME</button>
+        </div>
     </div>    
     <canvas></canvas>
     </div>
