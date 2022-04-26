@@ -343,26 +343,6 @@ window.addEventListener("keydown", (event) => {
         break;
     }
   }
-  //enemy keys
-  if (!enemy.dead) {
-    switch (event.key) {
-      case "ArrowUp":
-        enemy.velocity.y = -20;
-        break;
-      case "ArrowLeft":
-        keys.ArrowLeft.pressed = true;
-        enemy.lastKey = "ArrowLeft";
-        break;
-      case "ArrowRight":
-        keys.ArrowRight.pressed = true;
-        enemy.lastKey = "ArrowRight";
-        break;
-      case "ArrowDown":
-        enemy.attack();
-        break;
-    }
-  }
-  // console.log(event.key);
 });
 window.addEventListener("keyup", (event) => {
   switch (event.key) {
