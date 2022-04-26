@@ -267,45 +267,47 @@ function animate() {
   }
 
   //detect collision
-  if (
-    rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
-    player.isAttacking &&
-    player.health > 0 &&
-    player.framesCurrent === 4
-  ) {
-    enemy.takeHit();
-    player.isAttacking = false;
-    gsap.to("#enemyHealth", {
-      width: `${enemy.health}%`,
-    });
-  }
-  if (player.isAttacking && player.framesCurrent === 4) {
-    player.isAttacking = false;
-  }
-  if (
-    rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-    enemy.health > 0 &&
-    enemy.isAttacking
-  ) {
-    enemy.attack();
-    player.takeHit();
-    enemy.isAttacking = false;
-    gsap.to("#playerHealth", {
-      width: `${player.health}%`,
-    });
-  }
-
-  if (enemy.isAttacking && enemy.framesCurrent === 2) {
-    enemy.isAttacking = false;
-  }
-
-  //end game based on health
-  if (enemy.health <= 0 || player.health <= 0) {
-    determineWinner({ player, enemy, timerId });
-    gameState = "done";
-    setTimeout(() => {
-      restartButton.style.display = "flex";
-    }, 2000);
+  if(gameState==="fight"){
+    if (
+      rectangularCollision({ rectangle1: player, rectangle2: enemy }) &&
+      player.isAttacking &&
+      player.health > 0 &&
+      player.framesCurrent === 4
+    ) {
+      enemy.takeHit();
+      player.isAttacking = false;
+      gsap.to("#enemyHealth", {
+        width: `${enemy.health}%`,
+      });
+    }
+    if (player.isAttacking && player.framesCurrent === 4) {
+      player.isAttacking = false;
+    }
+    if (
+      rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
+      enemy.health > 0 &&
+      enemy.isAttacking
+    ) {
+      enemy.attack();
+      player.takeHit();
+      enemy.isAttacking = false;
+      gsap.to("#playerHealth", {
+        width: `${player.health}%`,
+      });
+    }
+  
+    if (enemy.isAttacking && enemy.framesCurrent === 2) {
+      enemy.isAttacking = false;
+    }
+  
+    //end game based on health
+    if (enemy.health <= 0 || player.health <= 0) {
+      determineWinner({ player, enemy, timerId });
+      gameState = "done";
+      setTimeout(() => {
+        restartButton.style.display = "flex";
+      }, 2000);
+    }
   }
 }
 animate();
@@ -321,7 +323,7 @@ restartButton.addEventListener("click", () => {
 });
 window.addEventListener("keydown", (event) => {
   //player keys
-  if (!player.dead) {
+  if (!player.dead && gameState ==="fight") {
     switch (event.key) {
       case "d":
         keys.d.pressed = true;
