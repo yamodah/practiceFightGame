@@ -170,6 +170,7 @@ class Fighter extends Sprite {
           this.image = this.sprites.jump.image;
           this.framesMax = this.sprites.jump.framesMax;
           this.framesCurrent = 0;
+          this.position.y = Math.max(this.position.y, 0);
         }
         break;
       case "fall":

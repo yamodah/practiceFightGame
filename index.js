@@ -253,17 +253,15 @@ function animate() {
     rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
     enemy.health > 0 &&
     enemy.image !== enemy.sprites.attack1.image &&
-    enemy.framesElapsed % enemy.framesCurrent == 0 
+    enemy.framesElapsed % enemy.framesCurrent == 0
   ) {
-
-      enemy.attack();
-      console.log("hit");
-      player.takeHit();
-      gsap.to("#playerHealth", {
-        width: `${player.health}%`,
-      });
-      enemy.isAttacking = false;
-
+    enemy.attack();
+    console.log("hit");
+    player.takeHit();
+    gsap.to("#playerHealth", {
+      width: `${player.health}%`,
+    });
+    enemy.isAttacking = false;
   }
 
   if (enemy.isAttacking && enemy.framesCurrent === 2) {
@@ -297,8 +295,10 @@ window.addEventListener("keydown", (event) => {
         player.lastKey = "a";
         break;
       case "w":
-        player.velocity.y = -20;
-        enemy.velocity.y = -20;
+        if (player.position.y > canvas.height/2) {
+          player.velocity.y = -20;
+          enemy.velocity.y = -20;
+        }
         break;
       case " ":
         player.attack();
